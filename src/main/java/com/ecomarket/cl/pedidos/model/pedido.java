@@ -17,18 +17,19 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class pedido {
+public class Pedido {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int pedidoId;
+    private Long pedidoId;
 
-    @Column(nullable = false)
-    private user usuario;
-
-    @Column(nullable = false)
+    @Column(name = "estado_pedido", nullable = false)
     private boolean estadoPedido;
 
-    @Column(nullable = false)
+    @Column(name = "fecha_pedido", nullable = false)
     private Date fechaPedido;   
+
+    public void setEstadoPedido(boolean b) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }
