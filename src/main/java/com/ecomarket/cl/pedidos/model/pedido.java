@@ -29,7 +29,5 @@ public class Pedido {
     @Column(name = "fecha_pedido", nullable = false)
     private Date fechaPedido;   
 
-    public void setEstadoPedido(boolean b) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+   
 }

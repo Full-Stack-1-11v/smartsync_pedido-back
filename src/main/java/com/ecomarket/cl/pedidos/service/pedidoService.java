@@ -17,33 +17,30 @@ public class PedidoService {
     @Autowired
     private PedidoRepository pedidoRepository;
 
-    public List<Pedido> findAll(){
+    public List<Pedido> findAll() {
         return pedidoRepository.findAll();
     }
 
-    public Pedido findByidPedido(Long id){
-        return pedidoRepository.findByidPedido(id);
+    public Pedido findByPedidoId(Long pedidoId) {
+        return pedidoRepository.findByPedidoId(pedidoId);
     }
 
-    public Pedido gestionarEnvio(Long pedidoId){
-        Pedido pedido = pedidoRepository.findByidPedido(pedidoId);
+    public Pedido gestionarEnvio(Long pedidoId) {
+        Pedido pedido = pedidoRepository.findByPedidoId(pedidoId);
         if (pedido != null) {
-            pedido.setEstadoPedido(true); // Cambia el estado del pedido a "optimizado"
-            pedidoRepository.save(pedido); // Guarda los cambios en la base de datos
+            pedido.setEstadoPedido(true);
+            pedidoRepository.save(pedido);
             return pedido;
         } else {
             return null;
         }
     }
 
-    // Metodo para guardar un pedido
     public Pedido guardarPedido(Pedido pedido) {
         return pedidoRepository.save(pedido);
     }
 
-    // Metodo para eliminar un pedido
     public void eliminarPedido(Long id) {
         pedidoRepository.deleteById(id);
     }
-
 }

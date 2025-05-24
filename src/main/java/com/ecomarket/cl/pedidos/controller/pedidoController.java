@@ -1,33 +1,33 @@
 package com.ecomarket.cl.pedidos.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.ecomarket.cl.pedidos.model.Pedido;
 import com.ecomarket.cl.pedidos.service.PedidoService;
 
 @RestController
 @RequestMapping("/api/pedidos")
-public class pedidoController {
+public class PedidoController {
 
     @Autowired
     private PedidoService pedidoService;
 
+        @GetMapping("/listar")
+        public ResponseEntity<List<Pedido>> listarTodos() {
+         return ResponseEntity.ok(pedidoService.findAll());
+    }   
+
     @GetMapping("/{id}")
     public ResponseEntity<Pedido> buscar(@PathVariable Long id){
-        try {
-            Pedido pedido = pedidoService.findByidPedido(id);
+        Pedido pedido = pedidoService.findByPedidoId(id);
+        if (pedido != null) {
             return ResponseEntity.ok(pedido);
-        } catch (Exception e) {
+        } else {
             return ResponseEntity.notFound().build();
         }
     }
@@ -38,16 +38,18 @@ public class pedidoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevoPedido);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Pedido> actualizar(@PathVariable Long id, @RequestBody Pedido pedido){
-        try {
-            Pedido ped = pedidoService.findByidPedido(id);
-            pedidoService.guardarPedido(ped);
-            return ResponseEntity.ok(pedido);
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
+     @PutMapping("/{id}")
+public ResponseEntity<Pedido> actualizar(@PathVariable Long id, @RequestBody Pedido pedido){
+    Pedido existente = pedidoService.findByPedidoId(id);
+    if (existente != null) {
+        existente.setEstadoPedido(pedido.isEstadoPedido());
+        existente.setFechaPedido(pedido.getFechaPedido());
+        pedidoService.guardarPedido(existente);
+        return ResponseEntity.ok(existente);
+    } else {
+        return ResponseEntity.notFound().build();
     }
+}
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> eliminar(@PathVariable Long id){
@@ -58,5 +60,4 @@ public class pedidoController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
-
 }
