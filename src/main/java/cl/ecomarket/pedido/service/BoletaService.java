@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import cl.ecomarket.pedido.dto.BoletaDto;
-import cl.ecomarket.pedido.model.Pedido;
+
 import jakarta.transaction.Transactional;
 @Transactional
 @Service
