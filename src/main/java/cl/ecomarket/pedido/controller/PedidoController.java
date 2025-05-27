@@ -11,7 +11,7 @@ import cl.ecomarket.pedido.model.Pedido;
 import cl.ecomarket.pedido.service.PedidoService;
 
 @RestController
-@RequestMapping("/api/pedidos")
+@RequestMapping("/api/v1/pedidos")
 public class PedidoController {
 
     @Autowired
@@ -22,7 +22,7 @@ public class PedidoController {
          return ResponseEntity.ok(pedidoService.findAll());
     }   
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id}/buscar")
     public ResponseEntity<Pedido> buscar(@PathVariable Long id){
         Pedido pedido = pedidoService.findByPedidoId(id);
         if (pedido != null) {
@@ -32,13 +32,13 @@ public class PedidoController {
         }
     }
 
-    @PostMapping
+    @PostMapping("/guardar")
     public ResponseEntity<Pedido> guardar(@RequestBody Pedido pedido){
         Pedido nuevoPedido = pedidoService.guardarPedido(pedido);
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevoPedido);
     }
 
-     @PutMapping("/{id}")
+     @PutMapping("/{id}/autualizar")
 public ResponseEntity<Pedido> actualizar(@PathVariable Long id, @RequestBody Pedido pedido){
     Pedido existente = pedidoService.findByPedidoId(id);
     if (existente != null) {
@@ -51,7 +51,7 @@ public ResponseEntity<Pedido> actualizar(@PathVariable Long id, @RequestBody Ped
     }
 }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{id}/eliminar")
     public ResponseEntity<?> eliminar(@PathVariable Long id){
         try {
             pedidoService.eliminarPedido(id);
