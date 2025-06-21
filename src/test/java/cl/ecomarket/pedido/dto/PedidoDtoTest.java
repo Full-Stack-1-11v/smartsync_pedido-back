@@ -2,8 +2,11 @@ package cl.ecomarket.pedido.dto;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+<<<<<<< HEAD
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+=======
+>>>>>>> a93048194b3d1cfcfae95904fc82b9a87d6b393b
 
 import java.sql.Date;
 
@@ -127,6 +130,20 @@ public class PedidoDtoTest {
 
         // Then
         assertNotEquals(pedido1.hashCode(), pedido2.hashCode()); // Valores diferentes, hashCode diferente
+    }
+
+    @Test
+    public void testEqualsAndHashCode() {
+        // Given
+        PedidoDto pedido1 = new PedidoDto(1L, true, Date.valueOf("2025-06-05"));
+        PedidoDto pedido2 = new PedidoDto(1L, true, Date.valueOf("2025-06-05"));
+        PedidoDto pedido3 = new PedidoDto(2L, false, Date.valueOf("2025-06-06"));
+
+        // Then
+        assertEquals(pedido1, pedido2);
+        assertEquals(pedido1.hashCode(), pedido2.hashCode());
+        assertNotEquals(pedido1, pedido3);
+        assertNotEquals(pedido1.hashCode(), pedido3.hashCode());
     }
 
     @Test

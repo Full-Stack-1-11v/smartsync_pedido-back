@@ -73,6 +73,7 @@ public class PedidoTest {
         assertEquals(pedido1.hashCode(), pedido2.hashCode());
     }
 
+    @SuppressWarnings("unlikely-arg-type")
     @Test
     public void testEqualsComparativos() {
         // Given

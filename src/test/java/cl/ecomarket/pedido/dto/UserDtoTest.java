@@ -2,9 +2,12 @@ package cl.ecomarket.pedido.dto;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+<<<<<<< HEAD
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+=======
+>>>>>>> a93048194b3d1cfcfae95904fc82b9a87d6b393b
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -83,6 +86,7 @@ public class UserDtoTest {
         String expected = "UserDto(id=1, name=John Doe, email=john.doe@ejemplo.com)";
         assertEquals(expected, result);
     }
+<<<<<<< HEAD
 
     @Test
     public void testEqualsSameObject() {
@@ -204,4 +208,6 @@ public class UserDtoTest {
         // Then
         assertEquals(user1.hashCode(), user2.hashCode()); // Partial null attributes, same hashCode
     }
+=======
+>>>>>>> a93048194b3d1cfcfae95904fc82b9a87d6b393b
 }

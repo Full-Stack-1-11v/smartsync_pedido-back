@@ -2,8 +2,11 @@ package cl.ecomarket.pedido.dto;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+<<<<<<< HEAD
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+=======
+>>>>>>> a93048194b3d1cfcfae95904fc82b9a87d6b393b
 
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;
@@ -83,6 +86,7 @@ public class ProductoDtoTest {
         String expected = "ProductoDto(idProducto=1, nombreProducto=Choclo, precioProducto=1000)";
         assertEquals(expected, result);
     }
+<<<<<<< HEAD
 
     @Test
     public void testEqualsSameObject() {
@@ -184,4 +188,6 @@ public class ProductoDtoTest {
         String expected = "ProductoDto(idProducto=null, nombreProducto=null, precioProducto=0)";
         assertEquals(expected, result);
     }
+=======
+>>>>>>> a93048194b3d1cfcfae95904fc82b9a87d6b393b
 }
