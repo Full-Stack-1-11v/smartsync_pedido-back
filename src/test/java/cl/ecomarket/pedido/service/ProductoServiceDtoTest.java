@@ -12,7 +12,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import cl.ecomarket.pedido.client.ProductoFeingIntefaz;
+import cl.ecomarket.pedido.client.ProductoFeingInterfaz;
 import cl.ecomarket.pedido.dto.ProductoDto;
 
 @SpringBootTest
@@ -20,11 +20,11 @@ import cl.ecomarket.pedido.dto.ProductoDto;
 class ProductoServiceDtoTest {
 
     @Mock
-    private ProductoFeingIntefaz productoFeingIntefaz;
+    private ProductoFeingInterfaz productoFeingInterfaz;
 
     @InjectMocks 
     // ProductoServiceDto es la clase que estamos probando, 
-    // y queremos inyectar el mock de ProductoFeingIntefaz en ella.
+    // y queremos inyectar el mock de ProductoFeingInterfaz en ella.
     // Esto permite que ProductoServiceDto use el mock de ProductoFeingIntefaz en lugar de una implementación real.
     private ProductoServiceDto productoServiceDto;
 
@@ -44,7 +44,7 @@ class ProductoServiceDtoTest {
         ProductoDto producto2 = new ProductoDto();
         List<ProductoDto> mockProductos = Arrays.asList(producto1, producto2);
 
-        when(productoFeingIntefaz.listarProductos()).thenReturn(mockProductos);
+        when(productoFeingInterfaz.listarProductos()).thenReturn(mockProductos);
 
         // When
         List<ProductoDto> result = productoServiceDto.listaList();
@@ -52,6 +52,6 @@ class ProductoServiceDtoTest {
         // Then
         assertNotNull(result);
         assertEquals(2, result.size());
-        verify(productoFeingIntefaz, times(1)).listarProductos();
+        verify(productoFeingInterfaz, times(1)).listarProductos();
     }
 }

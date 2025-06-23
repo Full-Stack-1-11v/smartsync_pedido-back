@@ -1,26 +1,35 @@
 package cl.ecomarket.pedido.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import cl.ecomarket.pedido.dto.UserDto;
 import cl.ecomarket.pedido.service.UserServiceDto;
+import cl.ecomarket.pedido.assemblers.UserModelAssembler;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+
 @RestController
 @RequestMapping("/api/v1/user")
 @Tag(name = "Usuarios", description = "Métodos relacionados con los usuarios.")
 public class UserDtoController {
- 
+
     @Autowired
     private UserServiceDto userServiceDto;
+
+    @Autowired
+    private UserModelAssembler userModelAssembler;
 
     @GetMapping("/listar")
     @Operation(summary = "Listar usuarios", description = "Obtiene una lista de todos los usuarios.")
@@ -28,10 +37,16 @@ public class UserDtoController {
         @ApiResponse(responseCode = "200", description = "Listado obtenido exitosamente."),
         @ApiResponse(responseCode = "204", description = "No hay usuarios para mostrar.")
     })
-    public List<UserDto> listarUsuarios() {
+    public CollectionModel<EntityModel<UserDto>> listarUsuarios() {
         List<UserDto> usuarios = userServiceDto.listarUsuarios();
-        System.out.println("Usuarios recibidos: " + usuarios);
-        return usuarios != null ? usuarios : List.of();
+        List<EntityModel<UserDto>> usuariosModel = usuarios.stream()
+                .map(userModelAssembler::toModel)
+                .collect(Collectors.toList());
+
+        return CollectionModel.of(
+                usuariosModel,
+                linkTo(methodOn(UserDtoController.class).listarUsuarios()).withSelfRel()
+        );
     }
 
     @GetMapping("/listar/dto")
@@ -40,9 +55,15 @@ public class UserDtoController {
         @ApiResponse(responseCode = "200", description = "Listado DTO obtenido exitosamente."),
         @ApiResponse(responseCode = "204", description = "No hay usuarios DTO para mostrar.")
     })
-    public List<UserDto> listarUsuariosDto() {
+    public CollectionModel<EntityModel<UserDto>> listarUsuariosDto() {
         List<UserDto> usuarios = userServiceDto.listarUsuarios();
-        System.out.println("Usuarios DTO recibidos: " + usuarios);
-        return usuarios != null ? usuarios : List.of();
+        List<EntityModel<UserDto>> usuariosModel = usuarios.stream()
+                .map(userModelAssembler::toModel)
+                .collect(Collectors.toList());
+
+        return CollectionModel.of(
+                usuariosModel,
+                linkTo(methodOn(UserDtoController.class).listarUsuariosDto()).withSelfRel()
+        );
     }
 }

@@ -15,6 +15,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
+import cl.ecomarket.pedido.assemblers.PedidoModelAssembler;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 @RestController
 @RequestMapping("/api/v1/pedidos")
@@ -24,14 +28,27 @@ public class PedidoController {
     @Autowired
     private PedidoService pedidoService;
 
+    @Autowired
+    private PedidoModelAssembler pedidoModelAssembler;
+
     @GetMapping("/listar")
     @Operation(summary = "Buscar todos los Pedidos", description = "Metodo que obtiene una lista con todos los Pedidos existentes.")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Obtencion de Pedidos Exitoso!"),
         @ApiResponse(responseCode = "204", description = "Solicitud exitosa, pero no hay contenido que mostrar.")
     })
-    public ResponseEntity<List<Pedido>> listarTodos() {
-        return ResponseEntity.ok(pedidoService.findAll());
+    public ResponseEntity<CollectionModel<EntityModel<Pedido>>> listarTodos() {
+        List<Pedido> pedidos = pedidoService.findAll();
+        List<EntityModel<Pedido>> pedidosModel = pedidos.stream()
+                .map(pedidoModelAssembler::toModel)
+                .toList();
+
+        return ResponseEntity.ok(
+                CollectionModel.of(
+                        pedidosModel,
+                        linkTo(methodOn(PedidoController.class).listarTodos()).withSelfRel()
+                )
+        );
     }   
 
     @GetMapping("/{id}/buscar")
@@ -40,10 +57,10 @@ public class PedidoController {
         @ApiResponse(responseCode = "200", description = "Pedido encontrado exitosamente!"),
         @ApiResponse(responseCode = "404", description = "Pedido no encontrado.")
     })
-    public ResponseEntity<Pedido> buscar(@PathVariable Long id){
+    public ResponseEntity<EntityModel<Pedido>> buscar(@PathVariable Long id){
         Pedido pedido = pedidoService.findByPedidoId(id);
         if (pedido != null) {
-            return ResponseEntity.ok(pedido);
+            return ResponseEntity.ok(pedidoModelAssembler.toModel(pedido));
         } else {
             return ResponseEntity.notFound().build();
         }
