@@ -33,3 +33,4 @@ build/
 .vscode/
 echo src/main/resources/application.properties >> .gitignore
 .env
+src/test/java/cl/ecomarket/pedido/repository/PedidoRepositoryTest.java
