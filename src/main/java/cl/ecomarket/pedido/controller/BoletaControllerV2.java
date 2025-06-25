@@ -23,7 +23,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 @RestController
-@RequestMapping("/api/v1/boleta")
+@RequestMapping("/api/v2/boleta")
 @Tag(name = "Boletas", description = "Métodos relacionados con las Boletas.")
 public class BoletaControllerV2 {
     

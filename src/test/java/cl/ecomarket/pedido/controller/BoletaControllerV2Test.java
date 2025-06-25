@@ -52,14 +52,14 @@ public class BoletaControllerV2Test {
         when(boletaService.guardarBoleta(any(BoletaDto.class))).thenReturn(boletaDto);
 
         // Mock del assembler con links
-        Link listarLink = Link.of("/api/v1/boleta/listar").withRel("listar");
-        Link guardarLink = Link.of("/api/v1/boleta/guardar").withRel("guardar");
+        Link listarLink = Link.of("/api/v2/boleta/listar").withRel("listar");
+        Link guardarLink = Link.of("/api/v2/boleta/guardar").withRel("guardar");
         EntityModel<BoletaDto> entityModel = EntityModel.of(boletaDto, listarLink, guardarLink);
 
         when(boletaModelAssembler.toModel(any(BoletaDto.class))).thenReturn(entityModel);
 
         // Act & Assert
-        mockMvc.perform(post("/api/v1/boleta/guardar")
+        mockMvc.perform(post("/api/v2/boleta/guardar")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(boletaDto)))
                 .andExpect(status().isOk())
@@ -93,12 +93,12 @@ public class BoletaControllerV2Test {
         when(boletaService.listarBoletas()).thenReturn(boletas);
 
         // Mock del assembler con links
-        Link listarLink = Link.of("/api/v1/boleta/listar").withRel("listar");
+        Link listarLink = Link.of("/api/v2/boleta/listar").withRel("listar");
         when(boletaModelAssembler.toModel(boleta1)).thenReturn(EntityModel.of(boleta1, listarLink));
         when(boletaModelAssembler.toModel(boleta2)).thenReturn(EntityModel.of(boleta2, listarLink));
 
         // Act & Assert
-        mockMvc.perform(get("/api/v1/boleta/listar"))
+        mockMvc.perform(get("/api/v2/boleta/listar"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$._embedded.boletaDtoList").isArray())
                 .andExpect(jsonPath("$._embedded.boletaDtoList[0].pedido.pedidoId").value(1))
@@ -113,7 +113,7 @@ public class BoletaControllerV2Test {
         when(boletaService.listarBoletas()).thenReturn(Collections.emptyList());
 
         // Act & Assert
-        mockMvc.perform(get("/api/v1/boleta/listar"))
+        mockMvc.perform(get("/api/v2/boleta/listar"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$._embedded").doesNotExist());
     }

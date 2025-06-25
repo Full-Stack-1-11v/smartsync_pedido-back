@@ -12,6 +12,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Clase que representa la entidad pedido
+ */
 @Entity
 @Table(name = "pedido")
 @Data
@@ -19,6 +22,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Pedido {
     
+    /**
+     * Atributo id del pedido autogenerado
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long pedidoId;

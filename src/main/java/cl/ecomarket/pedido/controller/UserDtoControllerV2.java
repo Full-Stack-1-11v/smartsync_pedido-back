@@ -21,7 +21,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 @RestController
-@RequestMapping("/api/v1/user")
+@RequestMapping("/api/v2/user")
 @Tag(name = "Usuarios", description = "Métodos relacionados con los usuarios.")
 public class UserDtoControllerV2 {
 

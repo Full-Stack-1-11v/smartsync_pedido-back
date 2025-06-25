@@ -50,45 +50,4 @@ public class UserServiceDtoTest {
         assertEquals(2, result.size());
         verify(userFeingInterfaz, times(1)).listarUsuarios();
     }
-
-    @Test
-    void testObtenerUsuarioPorId() {
-        // Given
-        Integer userId = 1;
-        UserDto mockUser = new UserDto();
-        when(userFeingInterfaz.listarUsuarios()).thenReturn(Arrays.asList(mockUser));
-
-        // When
-        UserDto result = userServiceDto.obtenerUsuarioPorId(userId);
-
-        // Then
-        assertNull(result); // Cambiar cuando se implemente
-    }
-
-    @Test
-    void testCrearUsuario() {
-        // Given
-        UserDto newUser = new UserDto();
-        when(userFeingInterfaz.listarUsuarios()).thenReturn(null);
-
-        // When
-        UserDto result = userServiceDto.crearUsuario(newUser);
-
-        // Then
-        assertNull(result); // Cambiar cuando se implemente
-    }
-
-    @Test
-    void testActualizarUsuario() {
-        // Given
-        Integer userId = 1;
-        UserDto updatedUser = new UserDto();
-        when(userFeingInterfaz.listarUsuarios()).thenReturn(null);
-
-        // When
-        UserDto result = userServiceDto.actualizarUsuario(userId, updatedUser);
-
-        // Then
-        assertNull(result); // Cambiar cuando se implemente
-    }
 }

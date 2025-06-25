@@ -43,11 +43,11 @@ public class ProductoDtoControllerV2Test {
         when(productoServiceDto.listaList()).thenReturn(productos);
 
         // Mock del assembler para cada producto
-        Link listarLink = Link.of("/api/v1/ecomarket/producto").withRel("listar");
+        Link listarLink = Link.of("/api/v2/ecomarket/producto").withRel("listar");
         when(productoDTOModelAssembler.toModel(producto1)).thenReturn(EntityModel.of(producto1, listarLink));
         when(productoDTOModelAssembler.toModel(producto2)).thenReturn(EntityModel.of(producto2, listarLink));
 
-        mockMvc.perform(get("/api/v1/ecomarket/producto"))
+        mockMvc.perform(get("/api/v2/ecomarket/producto"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$._embedded.productoDtoList").isArray())
                 .andExpect(jsonPath("$._embedded.productoDtoList[0].idProducto").value(1))
@@ -67,7 +67,7 @@ public class ProductoDtoControllerV2Test {
     public void testListarProductosHateoasVacio() throws Exception {
         when(productoServiceDto.listaList()).thenReturn(Collections.emptyList());
 
-        mockMvc.perform(get("/api/v1/ecomarket/producto"))
+        mockMvc.perform(get("/api/v2/ecomarket/producto"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$._embedded").doesNotExist());
 

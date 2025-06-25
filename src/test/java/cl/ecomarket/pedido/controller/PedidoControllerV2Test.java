@@ -57,11 +57,11 @@ public class PedidoControllerV2Test {
         when(pedidoService.findAll()).thenReturn(pedidos);
 
         // Mock del assembler para cada pedido
-        Link listarLink = Link.of("/api/v1/pedidos/listar").withRel("listar");
+        Link listarLink = Link.of("/api/v2/pedidos/listar").withRel("listar");
         when(pedidoModelAssembler.toModel(pedido1)).thenReturn(EntityModel.of(pedido1, listarLink));
         when(pedidoModelAssembler.toModel(pedido2)).thenReturn(EntityModel.of(pedido2, listarLink));
 
-        mockMvc.perform(get("/api/v1/pedidos/listar"))
+        mockMvc.perform(get("/api/v2/pedidos/listar"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$._embedded.pedidoList").isArray())
                 .andExpect(jsonPath("$._embedded.pedidoList[0].pedidoId").value(1))
@@ -77,7 +77,7 @@ public class PedidoControllerV2Test {
     public void testListarTodosHateoasVacio() throws Exception {
         when(pedidoService.findAll()).thenReturn(Collections.emptyList());
 
-        mockMvc.perform(get("/api/v1/pedidos/listar"))
+        mockMvc.perform(get("/api/v2/pedidos/listar"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$._embedded").doesNotExist());
 
@@ -94,12 +94,12 @@ public class PedidoControllerV2Test {
         when(pedidoService.findByPedidoId(1L)).thenReturn(pedido);
 
         // Mock del assembler para el pedido individual
-        Link listarLink = Link.of("/api/v1/pedidos/listar").withRel("listar");
-        Link buscarLink = Link.of("/api/v1/pedidos/1/buscar").withRel("buscar");
+        Link listarLink = Link.of("/api/v2/pedidos/listar").withRel("listar");
+        Link buscarLink = Link.of("/api/v2/pedidos/1/buscar").withRel("buscar");
         EntityModel<Pedido> entityModel = EntityModel.of(pedido, listarLink, buscarLink);
         when(pedidoModelAssembler.toModel(pedido)).thenReturn(entityModel);
 
-        mockMvc.perform(get("/api/v1/pedidos/1/buscar"))
+        mockMvc.perform(get("/api/v2/pedidos/1/buscar"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.pedidoId").value(1))
                 .andExpect(jsonPath("$._links.listar").exists())
@@ -112,7 +112,7 @@ public class PedidoControllerV2Test {
     public void testBuscarPedidoNoExistenteHateoas() throws Exception {
         when(pedidoService.findByPedidoId(1L)).thenReturn(null);
 
-        mockMvc.perform(get("/api/v1/pedidos/1/buscar"))
+        mockMvc.perform(get("/api/v2/pedidos/1/buscar"))
                 .andExpect(status().isNotFound());
 
         verify(pedidoService, times(1)).findByPedidoId(1L);
@@ -128,12 +128,12 @@ public class PedidoControllerV2Test {
         when(pedidoService.guardarPedido(any(Pedido.class))).thenReturn(pedido);
 
         // Mock del assembler con los links esperados
-        Link listarLink = Link.of("/api/v1/pedidos/listar").withRel("listar");
-        Link guardarLink = Link.of("/api/v1/pedidos/guardar").withRel("guardar");
+        Link listarLink = Link.of("/api/v2/pedidos/listar").withRel("listar");
+        Link guardarLink = Link.of("/api/v2/pedidos/guardar").withRel("guardar");
         EntityModel<Pedido> entityModel = EntityModel.of(pedido, listarLink, guardarLink);
         when(pedidoModelAssembler.toModel(pedido)).thenReturn(entityModel);
 
-        mockMvc.perform(post("/api/v1/pedidos/guardar")
+        mockMvc.perform(post("/api/v2/pedidos/guardar")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(pedido)))
                 .andExpect(status().isCreated())
@@ -159,12 +159,12 @@ public class PedidoControllerV2Test {
         when(pedidoService.guardarPedido(any(Pedido.class))).thenReturn(pedidoExistente);
 
         // Mock del assembler para el pedido actualizado
-        Link listarLink = Link.of("/api/v1/pedidos/listar").withRel("listar");
-        Link actualizarLink = Link.of("/api/v1/pedidos/1/autualizar").withRel("actualizar");
+        Link listarLink = Link.of("/api/v2/pedidos/listar").withRel("listar");
+        Link actualizarLink = Link.of("/api/v2/pedidos/1/autualizar").withRel("actualizar");
         EntityModel<Pedido> entityModel = EntityModel.of(pedidoExistente, listarLink, actualizarLink);
         when(pedidoModelAssembler.toModel(pedidoExistente)).thenReturn(entityModel);
 
-        mockMvc.perform(put("/api/v1/pedidos/1/autualizar")
+        mockMvc.perform(put("/api/v2/pedidos/1/autualizar")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(pedidoActualizado)))
                 .andExpect(status().isOk())
@@ -183,7 +183,7 @@ public class PedidoControllerV2Test {
         Pedido pedidoActualizado = new Pedido();
         pedidoActualizado.setEstadoPedido(true);
 
-        mockMvc.perform(put("/api/v1/pedidos/1/autualizar")
+        mockMvc.perform(put("/api/v2/pedidos/1/autualizar")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(pedidoActualizado)))
                 .andExpect(status().isNotFound());
@@ -196,7 +196,7 @@ public class PedidoControllerV2Test {
     public void testEliminarPedidoExistenteHateoas() throws Exception {
         doNothing().when(pedidoService).eliminarPedido(1L);
 
-        mockMvc.perform(delete("/api/v1/pedidos/1/eliminar"))
+        mockMvc.perform(delete("/api/v2/pedidos/1/eliminar"))
                 .andExpect(status().isNoContent());
 
         verify(pedidoService, times(1)).eliminarPedido(1L);
@@ -206,7 +206,7 @@ public class PedidoControllerV2Test {
     public void testEliminarPedidoConErrorHateoas() throws Exception {
         doThrow(new RuntimeException("Error al eliminar")).when(pedidoService).eliminarPedido(1L);
 
-        mockMvc.perform(delete("/api/v1/pedidos/1/eliminar"))
+        mockMvc.perform(delete("/api/v2/pedidos/1/eliminar"))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().string("Error al eliminar"));
 

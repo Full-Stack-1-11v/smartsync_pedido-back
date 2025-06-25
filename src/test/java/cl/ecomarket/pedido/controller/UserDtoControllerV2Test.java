@@ -41,15 +41,15 @@ public class UserDtoControllerV2Test {
         when(userServiceDto.listarUsuarios()).thenReturn(mockUsers);
 
         // Mock assembler for each user
-        Link listarLink = Link.of("/api/v1/user/listar").withRel("listar");
-        Link listarDtoLink = Link.of("/api/v1/user/listar/dto").withRel("listarDto");
+        Link listarLink = Link.of("/api/v2/user/listar").withRel("listar");
+        Link listarDtoLink = Link.of("/api/v2/user/listar/dto").withRel("listarDto");
         EntityModel<UserDto> entityModel1 = EntityModel.of(user1, listarLink, listarDtoLink);
         EntityModel<UserDto> entityModel2 = EntityModel.of(user2, listarLink, listarDtoLink);
 
         when(userModelAssembler.toModel(user1)).thenReturn(entityModel1);
         when(userModelAssembler.toModel(user2)).thenReturn(entityModel2);
 
-        mockMvc.perform(get("/api/v1/user/listar"))
+        mockMvc.perform(get("/api/v2/user/listar"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$._embedded.userDtoList").isArray())
                 .andExpect(jsonPath("$._embedded.userDtoList[0].id").value(1))
@@ -69,7 +69,7 @@ public class UserDtoControllerV2Test {
     public void testListarUsuariosHateoasVacio() throws Exception {
         when(userServiceDto.listarUsuarios()).thenReturn(Collections.emptyList());
 
-        mockMvc.perform(get("/api/v1/user/listar"))
+        mockMvc.perform(get("/api/v2/user/listar"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$._embedded").doesNotExist())
                 .andExpect(jsonPath("$._links.self").exists());
@@ -82,13 +82,13 @@ public class UserDtoControllerV2Test {
 
         when(userServiceDto.listarUsuarios()).thenReturn(mockUsers);
 
-        Link listarLink = Link.of("/api/v1/user/listar").withRel("listar");
-        Link listarDtoLink = Link.of("/api/v1/user/listar/dto").withRel("listarDto");
+        Link listarLink = Link.of("/api/v2/user/listar").withRel("listar");
+        Link listarDtoLink = Link.of("/api/v2/user/listar/dto").withRel("listarDto");
         EntityModel<UserDto> entityModel1 = EntityModel.of(user1, listarLink, listarDtoLink);
 
         when(userModelAssembler.toModel(user1)).thenReturn(entityModel1);
 
-        mockMvc.perform(get("/api/v1/user/listar/dto"))
+        mockMvc.perform(get("/api/v2/user/listar/dto"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$._embedded.userDtoList").isArray())
                 .andExpect(jsonPath("$._embedded.userDtoList[0].id").value(1))
@@ -101,7 +101,7 @@ public class UserDtoControllerV2Test {
     public void testListarUsuariosDtoHateoasVacio() throws Exception {
         when(userServiceDto.listarUsuarios()).thenReturn(Collections.emptyList());
 
-        mockMvc.perform(get("/api/v1/user/listar/dto"))
+        mockMvc.perform(get("/api/v2/user/listar/dto"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$._embedded").doesNotExist())
                 .andExpect(jsonPath("$._links.self").exists());

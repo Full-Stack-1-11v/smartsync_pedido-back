@@ -21,7 +21,7 @@ import cl.ecomarket.pedido.assemblers.PedidoModelAssembler;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 @RestController
-@RequestMapping("/api/v1/pedidos")
+@RequestMapping("/api/v2/pedidos")
 @Tag(name = "Pedidos", description = "Metodos relacionados con los Pedidos.")
 public class PedidoControllerV2 {
 

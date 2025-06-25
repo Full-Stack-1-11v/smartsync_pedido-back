@@ -22,7 +22,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 @RestController
-@RequestMapping("/api/v1/ecomarket/producto")
+@RequestMapping("/api/v2/ecomarket/producto")
 @Tag(name = "Productos", description = "Métodos relacionados con los productos.")
 public class ProductoDtoControllerV2 {
     

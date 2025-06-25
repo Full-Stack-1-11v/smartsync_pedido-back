@@ -8,6 +8,9 @@ import cl.ecomarket.pedido.dto.BoletaDto;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
+/**
+ * 
+ */
 @Component
 public class BoletaModelAssembler {
 

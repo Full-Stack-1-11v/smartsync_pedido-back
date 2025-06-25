@@ -19,17 +19,5 @@ public class UserServiceDto {
     public List<UserDto> listarUsuarios() {
         return userFeingInterfaz.listarUsuarios(); // Retorna una lista de UserDto
     }
-
-    public UserDto obtenerUsuarioPorId(Integer id) {
-       return null; // Retorna un UserDto
-    }
-
-    public UserDto crearUsuario(UserDto userDto) {
-       return null; // Retorna el UserDto creado
-    }
-
-    public UserDto actualizarUsuario(Integer id, UserDto userDto) {
-       return null; // Retorna el UserDto actualizado
-    }
     
 }
