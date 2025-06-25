@@ -14,7 +14,7 @@ public class SwaggerConfig {
         return new OpenAPI()
         .info(new Info()
                 .title("API 2025 Pedidos")
-                .version("1.7.1")
+                .version("2.0")
                 .description("Documentacion de la API para el sistema de creacion de pedidos."));
     }
 

@@ -6,16 +6,15 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import cl.ecomarket.pedido.dto.BoletaDto;
 import cl.ecomarket.pedido.dto.PedidoDto;
 import cl.ecomarket.pedido.dto.ProductoDto;
 import cl.ecomarket.pedido.dto.UserDto;
 
-@SpringBootTest
-@ActiveProfiles("test")
+@ExtendWith(MockitoExtension.class)
 public class BoletaServiceTest {
 
     private BoletaService boletaService;

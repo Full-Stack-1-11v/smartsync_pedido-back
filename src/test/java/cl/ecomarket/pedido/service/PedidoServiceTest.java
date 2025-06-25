@@ -8,22 +8,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.ActiveProfiles;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import cl.ecomarket.pedido.model.Pedido;
 import cl.ecomarket.pedido.repository.PedidoRepository;
 
-@SpringBootTest
-@ActiveProfiles("test")
+@ExtendWith(MockitoExtension.class)
 public class PedidoServiceTest {
 
-    @Autowired
+    @InjectMocks
     private PedidoService pedidoService;
 
-    @MockBean
+    @Mock
     private PedidoRepository pedidoRepository;
 
     @Test
