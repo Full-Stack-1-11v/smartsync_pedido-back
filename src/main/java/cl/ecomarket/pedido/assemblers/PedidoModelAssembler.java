@@ -8,11 +8,30 @@ import cl.ecomarket.pedido.model.Pedido;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
+/**
+ * Ensamblador para el modelo de {@link Pedido}, encargado de convertir
+ * objetos Pedido en {@link EntityModel} con enlaces HATEOAS relacionados.
+ * <p>
+ * Permite agregar enlaces útiles para la navegación y manipulación de recursos
+ * de pedidos en la API REST.
+ * </p>
+ */
 @Component
 public class PedidoModelAssembler {
 
     /**
-     * Convierte un Pedido en un EntityModel con enlaces HATEOAS a operaciones relacionadas.
+     * Constructor por defecto requerido por Spring.
+     */
+    public PedidoModelAssembler() {
+        // Constructor por defecto
+    }
+
+    /**
+     * Convierte un {@link Pedido} en un {@link EntityModel} que incluye enlaces HATEOAS
+     * a operaciones relacionadas, como listar, buscar, guardar, actualizar y eliminar pedidos.
+     *
+     * @param pedido El objeto Pedido a convertir.
+     * @return Un EntityModel que envuelve el Pedido y contiene enlaces HATEOAS.
      */
     public EntityModel<Pedido> toModel(Pedido pedido) {
         org.springframework.hateoas.Link listarLink = linkTo(methodOn(PedidoController.class).listarTodos())

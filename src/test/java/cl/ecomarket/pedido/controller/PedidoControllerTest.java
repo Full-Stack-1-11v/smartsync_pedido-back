@@ -92,7 +92,7 @@ public class PedidoControllerTest {
         when(pedidoService.findByPedidoId(1L)).thenReturn(pedidoExistente);
         when(pedidoService.guardarPedido(any(Pedido.class))).thenReturn(pedidoExistente);
 
-        mockMvc.perform(put("/api/v1/pedidos/1/autualizar")
+        mockMvc.perform(put("/api/v1/pedidos/1/actualizar")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"estadoPedido\": true}"))
                 .andExpect(status().isOk());
@@ -105,7 +105,7 @@ public class PedidoControllerTest {
     public void testActualizarPedidoNoExistente() throws Exception {
         when(pedidoService.findByPedidoId(1L)).thenReturn(null);
 
-        mockMvc.perform(put("/api/v1/pedidos/1/autualizar")
+        mockMvc.perform(put("/api/v1/pedidos/1/actualizar")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"estadoPedido\": true}"))
                 .andExpect(status().isNotFound());

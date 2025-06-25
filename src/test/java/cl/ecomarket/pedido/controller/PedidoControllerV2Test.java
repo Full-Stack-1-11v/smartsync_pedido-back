@@ -160,11 +160,11 @@ public class PedidoControllerV2Test {
 
         // Mock del assembler para el pedido actualizado
         Link listarLink = Link.of("/api/v2/pedidos/listar").withRel("listar");
-        Link actualizarLink = Link.of("/api/v2/pedidos/1/autualizar").withRel("actualizar");
+        Link actualizarLink = Link.of("/api/v2/pedidos/1/actualizar").withRel("actualizar");
         EntityModel<Pedido> entityModel = EntityModel.of(pedidoExistente, listarLink, actualizarLink);
         when(pedidoModelAssembler.toModel(pedidoExistente)).thenReturn(entityModel);
 
-        mockMvc.perform(put("/api/v2/pedidos/1/autualizar")
+        mockMvc.perform(put("/api/v2/pedidos/1/actualizar")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(pedidoActualizado)))
                 .andExpect(status().isOk())
@@ -183,7 +183,7 @@ public class PedidoControllerV2Test {
         Pedido pedidoActualizado = new Pedido();
         pedidoActualizado.setEstadoPedido(true);
 
-        mockMvc.perform(put("/api/v2/pedidos/1/autualizar")
+        mockMvc.perform(put("/api/v2/pedidos/1/actualizar")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(pedidoActualizado)))
                 .andExpect(status().isNotFound());
